@@ -15,6 +15,8 @@ rm "git-lfs-linux-amd64-v3.6.1.tar.gz"
 # git config
 git config --global user.name "BirnadinErick"
 git config --global user.email "45619033+BirnadinErick@users.noreply.github.com"
+git config --global core.editor "nvim"
+git config --global init.defaultBranch "master"
 
 # creds
 ssh-keygen -t ed25519 -C "45619033+BirnadinErick@users.noreply.github.com" -f github_key
