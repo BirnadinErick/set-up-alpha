@@ -27,3 +27,5 @@ if [ ! -d "jetbrains-toolbox-2.5.3.37797/" ]; then
 	rm -rf "jetbrains-toolbox-2.5.3.37797/"
 fi
 
+# ki-cad stable
+sudo dnf install kicad kicad-packages3d kicad-doc -y
