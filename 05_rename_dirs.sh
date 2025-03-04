@@ -2,9 +2,9 @@
 
 cd ~
 
-mv Documents/ docs/
+mv Documents/ documents/
 mv Downloads/ downloads/
 mv Music/ music/
-mv Pictures/ pics/
-mv Videos/ vids/
+mv Pictures/ picturess/
+mv Videos/ videos/
 

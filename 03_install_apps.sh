@@ -11,12 +11,11 @@ sudo dnf install -y chromium code
 
 flatpak install flathub -y md.obsidian.Obsidian
 flatpak install flathub -y com.obsproject.Studio
-flatpak install flathub -y com.google.AndroidStudio
+#flatpak install flathub -y com.google.AndroidStudio
 flatpak install flathub -y com.play0ad.zeroad
 flatpak install flathub com.github.alexhuntley.Plots -y
 flatpak install flathub -y org.gnome.World.PikaBackup
 flatpak install flathub -y org.gnome.design.Emblem
-flatpak install flathub ca.desrt.dconf-editor -y
 
 # jetbrains toolbox app v 2.5.3
 if [ ! -d "jetbrains-toolbox-2.5.3.37797/" ]; then
