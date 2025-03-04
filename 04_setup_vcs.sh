@@ -19,5 +19,5 @@ git config --global core.editor "nvim"
 git config --global init.defaultBranch "master"
 
 # creds
-ssh-keygen -t ed25519 -C "45619033+BirnadinErick@users.noreply.github.com" -f github_key
-cat !/.ssh/github_key
+#ssh-keygen -t ed25519 -C "45619033+BirnadinErick@users.noreply.github.com" -f github_key
+#cat !/.ssh/github_key
