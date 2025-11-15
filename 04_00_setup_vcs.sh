@@ -17,7 +17,10 @@ git config --global user.name "BirnadinErick"
 git config --global user.email "45619033+BirnadinErick@users.noreply.github.com"
 git config --global core.editor "nvim"
 git config --global init.defaultBranch "master"
+git config --global gpg.format ssh
+git config --global commit.gpgsign true
 
 # creds
 #ssh-keygen -t ed25519 -C "45619033+BirnadinErick@users.noreply.github.com" -f github_key
 #cat !/.ssh/github_key
+#git config --global user.signingkey $HOME/.ssh.github_key_sign.pub
