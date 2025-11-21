@@ -6,3 +6,6 @@ cat keys/wm_keys | dconf load /org/gnome/desktop/wm/keybindings/
 cat keys/shell_keys | dconf load /org/gnome/shell/keybindings/
 cat keys/mutter_keys | dconf load /org/gnome/mutter/keybindings/
 cat keys/wayland_keys | dconf load /org/gnome/mutter/wayland/keybindings/
+
+# capslock into ctrl
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
