@@ -14,7 +14,6 @@ echo "Installing Flatpak applications..."
 FLATPAK_APPS=(
     "eu.betterbird.Betterbird"              # Betterbird
     "com.microsoft.Edge"                    # Microsoft Edge
-    "com.nextcloud.desktopclient.nextcloud" # Nextcloud Client
     "md.obsidian.Obsidian"                  # Obsidian
     "org.telegram.desktop"                  # Telegram
     "com.github.tchx84.Flatseal"            # Flatseal
