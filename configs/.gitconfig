@@ -1,0 +1,19 @@
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[user]
+	name = BirnadinErick
+	email = 45619033+BirnadinErick@users.noreply.github.com
+	signingkey = /home/be/.ssh/github_sign.pub
+[core]
+	editor = nvim
+[init]
+	defaultBranch = master
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/be/.ssh/allowed_signers
