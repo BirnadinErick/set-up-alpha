@@ -1,0 +1,1 @@
+echo "Installing Antigravity... (SKIP FOR NOW) needs to check official docs"
