@@ -13,7 +13,6 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 echo "Installing Flatpak applications..."
 FLATPAK_APPS=(
     "eu.betterbird.Betterbird"              # Betterbird
-    "com.microsoft.Edge"                    # Microsoft Edge
     "md.obsidian.Obsidian"                  # Obsidian
     "org.telegram.desktop"                  # Telegram
     "com.github.tchx84.Flatseal"            # Flatseal
@@ -32,5 +31,5 @@ FLATPAK_APPS=(
 
 for app in "${FLATPAK_APPS[@]}"; do
     echo "Installing $app..."
-    flatpak install -y flathub "$app"
+    flatpak install  flathub "$app" -y
 done
