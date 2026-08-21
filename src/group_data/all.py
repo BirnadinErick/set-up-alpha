@@ -12,6 +12,14 @@ _sudo_password = getpass.getpass("Enter sudo password: ")
 # Timezone configuration
 timezone: str = "Europe/Berlin"
 
+# SSH configuration parameters
+ssh_config_path: str = "/etc/ssh/sshd_config"
+ssh_cloud_init_config_path: str = "/etc/ssh/sshd_config.d/50-cloud-init.conf"
+ssh_service_name: str = "ssh"
+ssh_password_authentication: str = "no"
+ssh_pubkey_authentication: str = "yes"
+ssh_kbd_interactive_authentication: str = "no"
+
 # APT Package Manager configuration
 apt_cache_valid_time: int = 3600  # seconds to cache apt repository index updates
 apt_upgrade_type: str = "upgrade"  # "dist_upgrade" or "upgrade"

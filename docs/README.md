@@ -12,7 +12,7 @@ The repository is organized following the conventions specified in [AGENTS.md](.
   - `group_data/all.py`: Contains variables globally applied to all hosts, such as package manager behavior and system configurations.
   - `tasks/`:
     - `system.py`: Implements package manager updates and upgrades (`apt`). It reads variables like `apt_cache_valid_time` and `apt_upgrade_type` from `group_data/all.py` to maintain modularity and avoid hardcoding values in task files.
-    - `security.py`: Stub for future security hardening (SSH keys, firewall setup).
+    - `security.py`: Hardens the SSH daemon to enforce public key authentication and disable password-based logins.
     - `docker.py`: Installs and configures Docker CE engine, Compose plugin, and manages the daemon state.
     - `stacks.py`: Stub for Docker Compose services.
 
@@ -34,6 +34,17 @@ To ensure standard operations, the update process is designed with the following
 1. **Idempotency**: Using built-in high-level `pyinfra.operations.apt` instead of shell commands.
 2. **Caching**: We pass `cache_time` parameter to `apt.update` to prevent redownloading repository database indexes during consecutive runs, matching `apt_cache_valid_time` in configuration.
 3. **Upgrade Strategy**: Configuration `apt_upgrade_type` controls whether `dist_upgrade` (with intelligent dependency resolver and optional `auto_remove`) or a regular `upgrade` is performed.
+
+
+## Security Hardening (`tasks/security.py`)
+
+To secure SSH access to the hosts, the SSH daemon configuration is hardened using the following declarative approach:
+
+1. **Centralized Configuration**: All parameters (such as SSH config paths, service name, and authentication modes) are defined in [`src/group_data/all.py`](../src/group_data/all.py) to prevent hardcoding.
+2. **Password Authentication Disabling**: Employs `files.line` to set `PasswordAuthentication no`, `KbdInteractiveAuthentication no`, and `ChallengeResponseAuthentication no` in the main configuration file `/etc/ssh/sshd_config`.
+3. **Public Key Authentication Enforcement**: Employs `files.line` to set `PubkeyAuthentication yes` in `/etc/ssh/sshd_config`.
+4. **Cloud-Init Override Handling**: Dynamically detects the presence of `/etc/ssh/sshd_config.d/50-cloud-init.conf` using a `File` fact and automatically disables password authentication there if present, preventing the default cloud-init overrides on cloud providers.
+5. **Conditional Service Reload**: Captures the change state of the files and reloads the SSH daemon service (`ssh`) using `server.service` only when a modification has occurred, ensuring active sessions are not interrupted unnecessarily.
 
 ## Offline Wi-Fi Bootstrapping (`src/templates/99-custom-wifi.yaml`)
 
