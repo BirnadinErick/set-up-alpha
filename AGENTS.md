@@ -44,6 +44,7 @@ Every app project should resice under src-directory
 - Always add or update the docs direcotry with proper reasioning why some decisions were made.
 - Keep the documentation up to date with the latest changes.
 - Always explain your reasoning in the docstrings and comments.
+- Always use relative file paths for referencing project files and directories in documentation, markdown files, and code comments.
 
 ---
 

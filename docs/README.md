@@ -4,7 +4,7 @@ This directory contains the documentation relating to the design decisions, layo
 
 ## Project Structure & Architecture
 
-The repository is organized following the conventions specified in [AGENTS.md](file:///c:/Users/me/repos/set-up-alpha/AGENTS.md):
+The repository is organized following the conventions specified in [AGENTS.md](../AGENTS.md):
 
 - `src/`:
   - `inventory.py`: Defines the target server inventory group `homelab_servers`. By default, this is set to `@localhost` for safe local dry-runs and testing.
