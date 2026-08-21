@@ -19,5 +19,5 @@ local.include(os.path.join(deploy_dir, "tasks", "security.py"))
 # 3. Docker configuration tasks
 local.include(os.path.join(deploy_dir, "tasks", "docker.py"))
 
-# 4. Service stacks lifecycle (placeholder stub)
-# local.include(os.path.join(deploy_dir, "tasks", "stacks.py"))
+# 4. Service stacks lifecycle
+local.include(os.path.join(deploy_dir, "tasks", "stacks.py"))

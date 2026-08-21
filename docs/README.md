@@ -14,7 +14,7 @@ The repository is organized following the conventions specified in [AGENTS.md](.
     - `system.py`: Implements package manager updates and upgrades (`apt`). It reads variables like `apt_cache_valid_time` and `apt_upgrade_type` from `group_data/all.py` to maintain modularity and avoid hardcoding values in task files.
     - `security.py`: Hardens the SSH daemon to enforce public key authentication and disable password-based logins.
     - `docker.py`: Installs and configures Docker CE engine, Compose plugin, and manages the daemon state.
-    - `stacks.py`: Stub for Docker Compose services.
+    - `stacks.py`: Manages Docker Compose service layouts, configurations, and lifecycles.
 
 ## Docker Engine Installation (`tasks/docker.py`)
 
@@ -26,6 +26,14 @@ The Docker Engine installation and configuration follow standard, modern securit
 4. **Dynamic Metadata Resolution**: Resolves the CPU architecture (mapping `uname -m` formats such as `x86_64` to Debian architecture strings like `amd64`) and queries target OS release codenames dynamically via `LinuxDistribution` facts.
 5. **Apt Repository Configuration**: Integrates the repository using `apt.repo` with proper signature verification linking to the downloaded keyring, setting file permissions securely (`0644`) on the generated `/etc/apt/sources.list.d/docker.list`.
 6. **Service Management**: Installs the complete Docker CE suite (including buildx and compose plugins) and ensures the `docker` daemon is enabled at boot and active using `server.service`.
+
+## Service Stacks Lifecycle Management (`tasks/stacks.py`)
+
+The deployment and configuration of self-hosted service stacks are kept modular and follow a least-privilege philosophy:
+
+1. **Standardized Base Directory**: All service stack configurations and files are located within the home directory of the user `be` under `/home/be/<service-name>/`.
+2. **Least Privilege (No Sudo)**: All stack directories and files are owned by the `be:be` user/group and configured without requiring administrative privileges (`_sudo=True`).
+3. **Dozzle Stack Deployment**: Establishes the directory structure `/home/be/dozzle/` (mode `0755`) and uploads the log viewer configuration `docker-compose.yaml` (mode `0644`). Deploys the Dozzle service under the project name `dozzle` using `docker.compose`.
 
 ## System Package Updates & Upgrades (`tasks/system.py`)
 

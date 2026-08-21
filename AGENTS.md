@@ -33,7 +33,7 @@ Every app project should resice under src-directory
 - Ensure all created directories and synchronized files explicitly define permissions (`mode`) and ownership (`user`, `group`).
 
 ### 3. Docker Service Management
-- Standardize all Docker service directories under a single base directory (e.g., `/opt/stacks/<service-name>/`).
+- Standardize all Docker service directories under a single base directory in the home directory of the user "be" (e.g., `/home/be/<service-name>/`).
 - Place `docker-compose.yml` and `.env` files into their respective service directory using `files.put` or `files.template`.
 - Use standard compose commands (`docker compose up -d --remove-orphans`) to manage container state so unchanged containers are automatically skipped.
 
@@ -51,7 +51,7 @@ Every app project should resice under src-directory
 ## Verification & Execution Commands
 - Preview planned changes without applying:
   ```bash
-  uvx pyinfra inventory.py deploy.py --dry --vv
+  uvx pyinfra inventory.py deploy.py --dry -vv
   ```
 
   DON'T run this command unless explicitly asked for. Usually just edit the files and let me know and I will run it.
