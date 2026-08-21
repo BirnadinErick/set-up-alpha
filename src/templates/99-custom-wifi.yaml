@@ -1,0 +1,21 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:
+      match:
+        macaddress: "e0:73:e7:71:de:b0"
+      optional: true
+      dhcp4: true
+      set-name: "eno1"
+  wifis:
+    wlo1:
+      dhcp4: true
+      dhcp6: true
+      access-points:
+        "BiB@DEG-D3W":
+          auth:
+            key-management: "eap"
+            method: "peap"
+            identity: "TODO_USERNAME"
+            password: "TODO_PASSWORD"
