@@ -2,6 +2,7 @@
 System-level configuration and package management task for pyinfra.
 Updates system packages and configures base settings.
 """
+
 from pyinfra import host
 from pyinfra.operations import apt
 
@@ -30,3 +31,9 @@ elif upgrade_type == "upgrade":
         name="Upgrade system packages",
         _sudo=True,
     )
+
+apt.packages(
+    name="Install needed packages",
+    packages=["ca-certificates", "curl"],
+    _sudo=True,
+)

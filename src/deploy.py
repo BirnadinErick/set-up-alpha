@@ -16,8 +16,8 @@ local.include(os.path.join(deploy_dir, "tasks", "system.py"))
 # 2. Security hardening tasks (placeholder stub)
 # local.include(os.path.join(deploy_dir, "tasks", "security.py"))
 
-# 3. Docker configuration tasks (placeholder stub)
-# local.include(os.path.join(deploy_dir, "tasks", "docker.py"))
+# 3. Docker configuration tasks
+local.include(os.path.join(deploy_dir, "tasks", "docker.py"))
 
 # 4. Service stacks lifecycle (placeholder stub)
 # local.include(os.path.join(deploy_dir, "tasks", "stacks.py"))

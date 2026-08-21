@@ -13,8 +13,19 @@ The repository is organized following the conventions specified in [AGENTS.md](.
   - `tasks/`:
     - `system.py`: Implements package manager updates and upgrades (`apt`). It reads variables like `apt_cache_valid_time` and `apt_upgrade_type` from `group_data/all.py` to maintain modularity and avoid hardcoding values in task files.
     - `security.py`: Stub for future security hardening (SSH keys, firewall setup).
-    - `docker.py`: Stub for Docker runtime configuration.
+    - `docker.py`: Installs and configures Docker CE engine, Compose plugin, and manages the daemon state.
     - `stacks.py`: Stub for Docker Compose services.
+
+## Docker Engine Installation (`tasks/docker.py`)
+
+The Docker Engine installation and configuration follow standard, modern security and administrative practices:
+
+1. **Centralized Configuration**: All properties (such as package lists, GPG URLs, repository URLs, and keyring paths) are defined in [`src/group_data/all.py`](../src/group_data/all.py) to prevent hardcoding configuration values inside tasks.
+2. **Keyring Directory Management**: Ensures that the `/etc/apt/keyrings/` directory exists with secure ownership (`root:root`) and permissions (`0755`) prior to downloading external keys.
+3. **GPG Key Management**: Fetches the official Docker GPG key and writes it securely (`0644`) to `/etc/apt/keyrings/docker.asc` using `apt.key`, avoiding the deprecated `apt-key` tool.
+4. **Dynamic Metadata Resolution**: Resolves the CPU architecture (mapping `uname -m` formats such as `x86_64` to Debian architecture strings like `amd64`) and queries target OS release codenames dynamically via `LinuxDistribution` facts.
+5. **Apt Repository Configuration**: Integrates the repository using `apt.repo` with proper signature verification linking to the downloaded keyring, setting file permissions securely (`0644`) on the generated `/etc/apt/sources.list.d/docker.list`.
+6. **Service Management**: Installs the complete Docker CE suite (including buildx and compose plugins) and ensures the `docker` daemon is enabled at boot and active using `server.service`.
 
 ## System Package Updates & Upgrades (`tasks/system.py`)
 
