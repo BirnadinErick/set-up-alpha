@@ -1,28 +1,39 @@
-# SetUp Alpha
+# Setup Alpha
 
-> alpha is a codename i use for a computer that act as central actor on my home network
+> this repo contains code to automate setting up the homeserver
+> and managing the state of the homeserver
 
-these scripts are intented to run on every major release of Fedora(the distro i use currently).
-this sets up a foundation that i can further enhance.
+Currently, ´pyinfra´ powers the state management. pyinfra was chose over
+ansible, due to my preference of code over YAML configs.
 
-# How to use
+That is the only reason for this choice over ansible, and other available
+solutions seem overkill for personal use.
 
-First, make the scripts executable:
+The code does following:
 
-```sh
-chmod +x 0*.sh
-```
+- installs and updates the system
+- creates snapshot before update and add it to the grub menu
+- creates directory for docker files
+- runs docker compose
+- configures the network
 
-then run them in order:
+## Development
 
-```sh
-./files.sh
-```
+Since the server is already running, the plan is to first mirror the server
+now and then keeps on iterating the code.
 
-this will create a list of files in the directory that can be copied into run.sh script.
+Planned phases:
 
-Now go into run.sh script and delete the files that you do not wish to run, and save it.
+- Installed packages and updates
+- Docker
+- Tunnels Cloudflare+Tailscale
+- Dazzle
+- Webmin
+- Homepage
+- Adguard
+- Immich
+- Jellyfin
 
-```sh
-./run.sh
-```
+## Remarks
+
+- needs to figure out a way to observe the server

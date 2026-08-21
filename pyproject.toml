@@ -1,0 +1,20 @@
+[project]
+name = "set-up-alpha"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Birnadin Erick", email = "45619033+BirnadinErick@users.noreply.github.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "pyinfra>=3.5",
+    "ruff>=0.16.4",
+]
+
+[project.scripts]
+set-up-alpha = "set_up_alpha:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
