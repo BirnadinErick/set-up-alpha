@@ -4,10 +4,21 @@ Applied to all hosts in the inventory.
 """
 
 import getpass
+import os
+import sys
+
+# Deploy user and stacks directory configurations
+deploy_user: str = "be"
+stacks_dir: str = "/opt/stacks"
 
 # sudo password for the remote server
-# _sudo_user= "be"
-_sudo_password = getpass.getpass("Enter sudo password: ")
+# Only prompt for sudo password if we are running system bootstrapping operations.
+# We check if we are doing a stacks-only deployment (e.g. deploy_stacks.py is in the arguments).
+is_stacks_only = any(arg.endswith(("deploy_stacks.py", "stacks.py")) for arg in sys.argv)
+
+_sudo_password = None
+if not is_stacks_only:
+    _sudo_password = os.environ.get("SUDO_PASSWORD") or getpass.getpass("Enter sudo password: ")
 
 # Timezone configuration
 timezone: str = "Europe/Berlin"

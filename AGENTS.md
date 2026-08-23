@@ -5,19 +5,21 @@ This repository contains a declarative infrastructure-as-code setup using `pyinf
 
 ### Project Layout
 
-Every app project should resice under src-directory
+Every app project should reside under the `src` directory:
 - `src/`:  
     - `inventory.py`: Target hosts, SSH connection parameters, and group definitions.
-    - `deploy.py`: Main deployment entrypoint importing task modules in execution order.
+    - `deploy.py`: Main deployment entrypoint importing phase-specific deploy files.
+    - `deploy_system.py`: Entrypoint for system bootstrapping operations (requires sudo).
+    - `deploy_stacks.py`: Entrypoint for user-space Docker stack deployments (unprivileged).
     - `group_data/all.py`: Shared configuration variables (paths, usernames, timezone, common package lists).
     - `tasks/`:
-    - `system.py`: Base packages, user management, sudoers, timezone, and kernel parameters.
-    - `security.py`: SSH hardening, UFW firewall rules, and automatic security updates.
-    - `docker.py`: Docker CE engine, Compose plugin installation, and service configuration.
-    - `stacks.py`: Docker Compose directory layout, compose files, env files, and container lifecycle.
+        - `system.py`: Base packages, user management, sudoers, timezone, and kernel parameters.
+        - `security.py`: SSH hardening, UFW firewall rules, and automatic security updates.
+        - `docker.py`: Docker CE engine, Compose plugin installation, service configuration, and stack directory permissions.
+        - `stacks.py`: Docker Compose directory layout, compose files, env files, and container lifecycle.
     - `templates/`: Jinja2 templates for system configs and service environments.
     - `files/`: Static configuration files and Docker compose definitions.
-- `docs`: directory for saving documents related to the project.
+- `docs/`: Directory for saving documents related to the project.
 ---
 
 ## Agent Instructions & Coding Rules
@@ -33,9 +35,10 @@ Every app project should resice under src-directory
 - Ensure all created directories and synchronized files explicitly define permissions (`mode`) and ownership (`user`, `group`).
 
 ### 3. Docker Service Management
-- Standardize all Docker service directories under a single base directory in the home directory of the user "be" (e.g., `/home/be/<service-name>/`).
+- Standardize all Docker service directories under `/opt/stacks/` (e.g., `/opt/stacks/<service-name>/`).
 - Place `docker-compose.yml` and `.env` files into their respective service directory using `files.put` or `files.template`.
-- Use standard compose commands (`docker compose up -d --remove-orphans`) to manage container state so unchanged containers are automatically skipped.
+- Ensure all file management and Docker stack lifecycles within `/opt/stacks` run completely unprivileged without `_sudo=True`.
+- Use standard compose commands (`docker compose up -d --remove-orphans` or `docker.compose` operations) to manage container state so unchanged containers are automatically skipped.
 
 ### 4. Code Style & Conventions
 - Use Python 3.10+ features with clean type annotations where helpful.

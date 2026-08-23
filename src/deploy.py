@@ -1,23 +1,17 @@
 """
 Main deployment entrypoint for pyinfra.
-Imports task modules in execution order.
+Runs both system bootstrapping and user-space stack deployment.
 """
 
 import os
 
 from pyinfra import local
 
-# Get the directory of deploy.py
+# Get the directory of this file
 deploy_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 1. System task (includes apt update/upgrade)
-local.include(os.path.join(deploy_dir, "tasks", "system.py"))
+# 1. Run system bootstrapping operations (privileged)
+local.include(os.path.join(deploy_dir, "deploy_system.py"))
 
-# 2. Security hardening tasks (placeholder stub)
-local.include(os.path.join(deploy_dir, "tasks", "security.py"))
-
-# 3. Docker configuration tasks
-local.include(os.path.join(deploy_dir, "tasks", "docker.py"))
-
-# 4. Service stacks lifecycle
-local.include(os.path.join(deploy_dir, "tasks", "stacks.py"))
+# 2. Run user-space Docker stack management (unprivileged)
+local.include(os.path.join(deploy_dir, "deploy_stacks.py"))

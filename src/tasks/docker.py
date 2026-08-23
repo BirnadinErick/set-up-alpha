@@ -29,6 +29,8 @@ docker_packages: list[str] = host.data.get(
     ],
 )
 cache_time: int = host.data.get("apt_cache_valid_time", 3600)
+deploy_user: str = host.data.get("deploy_user", "be")
+stacks_dir: str = host.data.get("stacks_dir", "/opt/stacks")
 
 # 2. Gather architecture mapping to support Debian/Ubuntu specific names.
 # uname -m (pyinfra server.Arch) returns x86_64 or aarch64, but Docker repos use amd64 or arm64.
@@ -122,6 +124,29 @@ server.service(
     service="docker",
     running=True,
     enabled=True,
+    _sudo=True,
+)
+
+# WARNING: Seems like this overrides the group, not append it, locking
+#           the user out of admin taks. For now, this is disabled,
+#           and the user is expected to make sure the user has proepr permissions
+# # 12. Ensure the deployment user belongs to the docker group
+# server.user(
+#     name=f"Ensure deploy user {deploy_user} belongs to docker group",
+#     user=deploy_user,
+#     groups=["docker"],
+#     append=True,
+#     _sudo=True,
+# )
+
+# 13. Create /opt/stacks directory with root privileges and SGID bit set
+files.directory(
+    name=f"Ensure {stacks_dir} directory exists with SGID and docker group ownership",
+    path=stacks_dir,
+    present=True,
+    mode="2775",
+    user=deploy_user,
+    group="docker",
     _sudo=True,
 )
 
