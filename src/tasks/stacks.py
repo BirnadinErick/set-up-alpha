@@ -42,3 +42,46 @@ docker.compose(
     project_name="dozzle",
     present=True,
 )
+
+homepage_dir = f"{stacks_dir}/homepage"
+
+# 4. Ensure the Homepage stack directory exists
+files.directory(
+    name="Ensure Homepage stack directory exists",
+    path=homepage_dir,
+    present=True,
+    mode="0775",
+    user=deploy_user,
+    group="docker",
+)
+
+# 5. Copy the Homepage docker-compose.yaml file to the target
+files.put(
+    name="Upload Homepage docker-compose.yaml",
+    src=os.path.join(os.path.dirname(__file__), "..", "templates", "homepage", "docker-compose.yaml"),
+    dest=f"{homepage_dir}/docker-compose.yaml",
+    mode="0664",
+    user=deploy_user,
+    group="docker",
+)
+
+# 6. Synchronize the Homepage config directory to the target
+files.sync(
+    name="Sync Homepage config directory",
+    src=os.path.join(os.path.dirname(__file__), "..", "templates", "homepage", "config"),
+    dest=f"{homepage_dir}/config",
+    user=deploy_user,
+    group="docker",
+    mode="0664",
+    dir_mode="0775",
+    delete=True,
+)
+
+# 7. Deploy the Homepage stack
+docker.compose(
+    name="Deploy Homepage stack using docker compose",
+    project_directory=homepage_dir,
+    project_name="homepage",
+    present=True,
+)
+

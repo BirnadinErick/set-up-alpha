@@ -37,6 +37,7 @@ The deployment and configuration of self-hosted service stacks are kept modular 
 1. **Standardized Base Directory**: All service stack configurations and files are located within `/opt/stacks/` under `/opt/stacks/<service-name>/`.
 2. **Least Privilege (No Sudo)**: All stack directories and files within `/opt/stacks` are owned by the `be:docker` user/group and configured without requiring administrative privileges (`_sudo=True` or `_sudo_password`).
 3. **Dozzle Stack Deployment**: Establishes the directory structure `/opt/stacks/dozzle/` (mode `0775`) and uploads the log viewer configuration `docker-compose.yaml` (mode `0664`). Deploys the Dozzle service under the project name `dozzle` using `docker.compose` completely unprivileged.
+4. **Homepage Stack Deployment**: Establishes the directory structure `/opt/stacks/homepage/` (mode `0775`), uploads the dashboard configuration `docker-compose.yaml` (mode `0664`), and synchronizes the local configuration directory [`src/templates/homepage/config/`](../src/templates/homepage/config) to `/opt/stacks/homepage/config/` (files mode `0664`, directories mode `0775`) using `files.sync`. Deploys the Homepage service under the project name `homepage` using `docker.compose` completely unprivileged.
 
 ## System Package Updates & Upgrades (`tasks/system.py`)
 
